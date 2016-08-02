@@ -46,7 +46,7 @@ class ConfigsRegistrarTestCase(DbTestCase):
         registrar._pack_loader.get_packs = mock.Mock()
         registrar._pack_loader.get_packs.return_value = {'dummy_pack_1': PACK_PATH}
         packs_base_paths = content_utils.get_packs_base_paths()
-        registrar.register_configs_for_all_packs(base_dirs=packs_base_paths)
+        registrar.register_from_packs(base_dirs=packs_base_paths)
 
         # Verify pack and schema have been registered
         pack_dbs = Pack.get_all()
