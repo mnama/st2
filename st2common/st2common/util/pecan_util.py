@@ -13,25 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
-import st2common.config as config
 
-from st2common.transport.bootstrap_utils import register_exchanges_with_retry
+import pecan
+from six.moves import http_client
 
-
-def _setup():
-    config.parse_args()
-
-    # 2. setup logging.
-    logging.basicConfig(format='%(asctime)s %(levelname)s [-] %(message)s',
-                        level=logging.DEBUG)
+__all__ = [
+    'abort_request',
+]
 
 
-def main():
-    _setup()
-    register_exchanges_with_retry()
-
-
-# The scripts sets up Exchanges in RabbitMQ.
-if __name__ == '__main__':
-    main()
+def abort_request(status_code=http_client.UNAUTHORIZED,
+                  message='Invalid or missing credentials'):
+    pecan.abort(status_code, message)
